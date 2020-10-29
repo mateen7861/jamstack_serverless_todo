@@ -49,7 +49,7 @@ export default function Home() {
   const classes = useStyles()
 
   const { data, loading, error, refetch } = useQuery(GET_TODOS, {
-    pollInterval: 10,
+    // pollInterval: 10,
   })
   const [addTodo] = useMutation(ADD_TODO)
 
