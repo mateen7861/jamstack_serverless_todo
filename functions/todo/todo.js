@@ -6,6 +6,7 @@ var client = new faunadb.Client({
   secret: "fnAD5SUgV4ACARKIF1NI6v0m8z2zoAgaPG_fmwzW",
 })
 
+console.log(process.env)
 const typeDefs = gql`
   type Query {
     todos: [Todo]!
