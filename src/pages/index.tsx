@@ -70,6 +70,8 @@ export default function Home() {
   return (
     <>
       <Header />
+      <br />
+      <br />
       <Container className={classes.page}>
 
         <Box>
