@@ -53,11 +53,15 @@ export default function Home() {
 
   const [todoText, setTodoText] = useState("")
 
-  const addTodoFunc = todo => {
+  const addTodoFunc = () => {
+    setTodoText("")
     addTodo({
-      variables: { title: todo },
+      variables: { title: todoText },
+      refetchQueries: [{ query: GET_TODOS }]
     })
+
     refetch()
+
   }
 
   return (
@@ -74,22 +78,22 @@ export default function Home() {
           style={{ width: "5%", height: "56px" }}
           variant="contained"
           color="secondary"
-          onClick={() => {
-            addTodoFunc(todoText)
-          }}
+          onClick={addTodoFunc}
         >
           <AddIcon />
         </Button>
       </Box>
-      {loading ? <div>loading...</div> : null}
-      {error ? <div>{error.message}</div> : null}
-      {!loading && !error && (
-        <List className={classes.root}>
-          {data.todos.map(todo => (
-            <Todo todo={todo} />
-          ))}
-        </List>
-      )}
-    </Container>
+      { loading ? <div>loading...</div> : null}
+      { error ? <div>{error.message}</div> : null}
+      {
+        !loading && !error && (
+          <List className={classes.root}>
+            {data.todos.map(todo => (
+              <Todo todo={todo} />
+            ))}
+          </List>
+        )
+      }
+    </Container >
   )
 }
