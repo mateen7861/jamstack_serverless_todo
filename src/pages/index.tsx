@@ -6,7 +6,9 @@ import {
 
   Button,
   Box,
+  CircularProgress,
 } from "@material-ui/core"
+
 import { makeStyles } from "@material-ui/core/styles"
 import Header from "../components/Header"
 import { gql, useMutation, useQuery } from "@apollo/client"
@@ -42,6 +44,14 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center"
   },
+  loader: {
+
+    display: "flex",
+    marginTop: "10rem",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 }))
 
 export default function Home() {
@@ -94,8 +104,8 @@ export default function Home() {
           >
             Add Todo        </Button>
         </Box>
-        {loading ? <div>loading...</div> : null}
-        {error ? <div>{error.message}</div> : null}
+        {loading ? <div className={classes.loader}><CircularProgress /></div> : null}
+        {error ? <div>{error.message}</div> : null}        {error ? <div>{error.message}</div> : null}
 
         <List className={classes.root}>
           {data?.todos.map(todo => (
