@@ -1,11 +1,11 @@
 import React from "react"
 import {
-    ListItem,
-    ListItemIcon,
-    Checkbox,
-    ListItemText,
-    ListItemSecondaryAction,
-    IconButton,
+  ListItem,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@material-ui/core"
 
 import DeleteIcon from "@material-ui/icons/Delete"
@@ -34,53 +34,54 @@ const GET_TODOS = gql`
 `
 
 const Todo = ({ todo }) => {
-    const [deleteTodo] = useMutation(DELETE_TODO)
-    const [updateTodo] = useMutation(UPDATE_TODO)
-    const { refetch } = useQuery(GET_TODOS)
-    const [checked, setChecked] = React.useState(todo.done)
+  const [deleteTodo] = useMutation(DELETE_TODO)
+  const [updateTodo] = useMutation(UPDATE_TODO)
+  const { refetch } = useQuery(GET_TODOS)
+  const [checked, setChecked] = React.useState(todo.done)
 
-    const updateTodoFunc = (id, done) => {
-        updateTodo({
-            variables: { id: id, done: done },
-            refetchQueries: [{ query: GET_TODOS }]
+  const updateTodoFunc = (id, done) => {
+    updateTodo({
+      variables: { id: id, done: done },
+      refetchQueries: [{ query: GET_TODOS }]
 
-        })
-        refetch()
+    })
+    refetch()
 
-    }
+  }
 
-    return (
-        <ListItem key={todo.id} role={undefined} dense button onClick={() => { }}>
-            <ListItemIcon>
-                <Checkbox
-                    edge="start"
-                    checked={checked}
-                    onChange={() => {
-                        setChecked(!checked)
-                        updateTodoFunc(todo.id, todo.done)
-                    }}
-                    tabIndex={-1}
-                    disableRipple
-                />
-            </ListItemIcon>
-            <ListItemText id={todo.id} primary={`${todo.title}`} />
-            <ListItemSecondaryAction>
-                <IconButton
-                    edge="end"
-                    aria-label="comments"
-                    onClick={() => {
-                        deleteTodo({
-                            variables: { id: todo.id },
-                            refetchQueries: [{ query: GET_TODOS }]
-                        })
+  return (
+    <ListItem key={todo.id} role={undefined} dense button onClick={() => { }}>
+      <ListItemIcon>
+        <Checkbox
+          color='primary'
+          edge="start"
+          checked={checked}
+          onChange={() => {
+            setChecked(!checked)
+            updateTodoFunc(todo.id, todo.done)
+          }}
+          tabIndex={-1}
+          disableRipple
+        />
+      </ListItemIcon>
+      <ListItemText id={todo.id} primary={`${todo.title}`} />
+      <ListItemSecondaryAction>
+        <IconButton
+          edge="end"
+          aria-label="comments"
+          onClick={() => {
+            deleteTodo({
+              variables: { id: todo.id },
+              refetchQueries: [{ query: GET_TODOS }]
+            })
 
-                    }}
-                >
-                    <DeleteIcon />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-    )
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  )
 }
 
 export default Todo

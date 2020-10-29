@@ -8,8 +8,7 @@ import {
   Box,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-
-import AddIcon from "@material-ui/icons/Add"
+import Header from "../components/Header"
 import { gql, useMutation, useQuery } from "@apollo/client"
 import Todo from "../components/Todo"
 
@@ -34,7 +33,6 @@ const GET_TODOS = gql`
 const useStyles = makeStyles(theme => ({
   root: {
     width: "90%",
-    margin: "20px auto",
     backgroundColor: theme.palette.background.paper,
   },
   page: {
@@ -42,6 +40,7 @@ const useStyles = makeStyles(theme => ({
     // margin: "50px auto 0px",
     display: "flex",
     flexDirection: "column",
+    alignItems: "center"
   },
 }))
 
@@ -69,34 +68,41 @@ export default function Home() {
   }
 
   return (
-    <Container className={classes.page}>
-      <Box>
-        <TextField
-          style={{ width: "90%", marginRight: "4px" }}
-          id="outlined-basic"
-          label="Add Todo"
-          variant="outlined"
-          inputRef={node => titleField = node}
-        />
-        <Button
-          style={{ width: "5%", height: "56px" }}
-          variant="contained"
-          color="secondary"
-          onClick={addTodoFunc}
-        >
-          <AddIcon />
-        </Button>
-      </Box>
-      { loading ? <div>loading...</div> : null}
-      { error ? <div>{error.message}</div> : null}
+    <>
+      <Header />
+      <Container className={classes.page}>
 
-      <List className={classes.root}>
-        {data?.todos.map(todo => (
-          <Todo todo={todo} />
-        ))}
-      </List>
+        <Box>
+          <TextField
+            style={{ width: "100%" }}
+            id="outlined-basic"
+            label="Enter title of todo"
+            variant="outlined"
+            inputRef={node => titleField = node}
+          />
+          <br />
+          <br />
+          <Button
+
+            variant="contained"
+            color="primary"
+            onClick={addTodoFunc}
+            fullWidth
+            size="large"
+          >
+            Add Todo        </Button>
+        </Box>
+        {loading ? <div>loading...</div> : null}
+        {error ? <div>{error.message}</div> : null}
+
+        <List className={classes.root}>
+          {data?.todos.map(todo => (
+            <Todo todo={todo} />
+          ))}
+        </List>
 
 
-    </Container >
+      </Container >
+    </>
   )
 }
