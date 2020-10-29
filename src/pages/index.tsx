@@ -64,7 +64,7 @@ export default function Home() {
     })
 
     refetch()
-    console.log(titleField.value)
+    titleField.value = ""
   }
 
   return (
