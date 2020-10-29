@@ -48,20 +48,24 @@ const useStyles = makeStyles(theme => ({
 export default function Home() {
   const classes = useStyles()
 
-  const { data, loading, error, refetch } = useQuery(GET_TODOS)
+  const { data, loading, error, refetch } = useQuery(GET_TODOS, {
+    pollInterval: 10,
+  })
   const [addTodo] = useMutation(ADD_TODO)
 
-  const [todoText, setTodoText] = useState("")
+
+  let titleField
+
 
   const addTodoFunc = () => {
-    setTodoText("")
+
     addTodo({
-      variables: { title: todoText },
+      variables: { title: titleField.value },
       refetchQueries: [{ query: GET_TODOS }]
     })
 
     refetch()
-
+    console.log(titleField.value)
   }
 
   return (
@@ -72,7 +76,7 @@ export default function Home() {
           id="outlined-basic"
           label="Add Todo"
           variant="outlined"
-          onChange={e => setTodoText(e.target.value)}
+          inputRef={node => titleField = node}
         />
         <Button
           style={{ width: "5%", height: "56px" }}
@@ -85,15 +89,14 @@ export default function Home() {
       </Box>
       { loading ? <div>loading...</div> : null}
       { error ? <div>{error.message}</div> : null}
-      {
-        !loading && !error && (
-          <List className={classes.root}>
-            {data.todos.map(todo => (
-              <Todo todo={todo} />
-            ))}
-          </List>
-        )
-      }
+
+      <List className={classes.root}>
+        {data?.todos.map(todo => (
+          <Todo todo={todo} />
+        ))}
+      </List>
+
+
     </Container >
   )
 }
