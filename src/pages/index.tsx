@@ -38,8 +38,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   page: {
-    width: "1024px",
-    margin: "50px auto 0px",
+    width: "90%",
+    // margin: "50px auto 0px",
     display: "flex",
     flexDirection: "column",
   },
@@ -49,7 +49,7 @@ export default function Home() {
   const classes = useStyles()
 
   const { data, loading, error, refetch } = useQuery(GET_TODOS, {
-    // pollInterval: 10,
+    pollInterval: 100
   })
   const [addTodo] = useMutation(ADD_TODO)
 

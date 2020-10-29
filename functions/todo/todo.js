@@ -3,7 +3,7 @@ const faunadb = require("faunadb")
 const q = faunadb.query
 
 var client = new faunadb.Client({
-  secret: peocess.env.FAUNA,
+  secret: "fnAD5SUgV4ACARKIF1NI6v0m8z2zoAgaPG_fmwzW",
 })
 
 const typeDefs = gql`
